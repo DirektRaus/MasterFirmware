@@ -1,0 +1,9 @@
+# git ignore file
+*.tex
+*.bat
+*.html
+*.png
+*.js
+*.css
+*.xml
+*/
