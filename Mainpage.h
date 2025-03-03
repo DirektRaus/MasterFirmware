@@ -96,6 +96,7 @@
 * - PeripherieRoutinen:		HAL (Hardware Abstraction Layer) für den XMega
 *
 * @section sec_resources Benutzte µC-Peripherie und verwendete Ports und Pins
+*
 * !!! Achtung Änderungen der Portbelegung !!! Stand Schaltplan v. 28.01.25
 *
 * - Port_A: Debug-In -LED, Schalter SW1...4
@@ -116,7 +117,7 @@
 *   + Pin_0:	START-OK LED
 *   + Pin_1:	START-ERR LED
 *   + Pin_2:	START-BREAK LED
-*   + Pin_3:	Start-App LED
+*   + Pin_3:	START-App LED
 *   + Pin_4:	HOLD-RUN LED
 *
 * - Port_C:  7Seg.Display-Master-SPI
@@ -131,13 +132,21 @@
 *   + Pin_3:	Zielfreigabe-LED
 *   + Pin_4:	DEBUG_1-LED
 *   + Pin_5:	MAX-!CS/Load:
-
+*
 * - Port_D: RF-Modul - USART
 *   + Pin_6:	(µC-RXD): GAMMA-SERIAL TXO
 *   + Pin_7:	(µC-TXD): GAMMA-SERIAL RXI
-
-
-
+*
+* - Port_D: RF-Modul - USART
+*   + Pin_6:	(µC-RXD): RXI <= GAMMA-SERIAL
+*   + Pin_7:	(µC-TXD): TXO => GAMMA-SERIAL
+*
+* - Port_E: RF-Modul - USART
+*   + Pin_0:	unbelegt / frei
+*   + Pin_1:	unbelegt / frei
+*   + Pin_2:	TXD0: DEBUG-USART TXD
+*   + Pin_3:	RXD0: DEBUG-USART RXD
+/****************************************************************************
 /****************************************************************************
 * !!! alte Belegung !!!!
 /****************************************************************************

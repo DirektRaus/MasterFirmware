@@ -38,41 +38,43 @@
 /*									Defines und Konstante											*/
 /****************************************************************************************************/
 // analoge Zweiton-Beep-Ausgabe: Sample-Tabelle auf DAC ausgeben
-#define	SOUND_CLKDIV			EVSYS_CHMUX_PRESCALER_32_gc  ///<  F_SAMPLE= F_SYS / SOUND_CLKDIV = ~125KHz
-#define	SOUND_EV_CHANNEL		EVSYS_CH0MUX	///<  EV_CH0 als Taktteiler für DMA
-#define	SOUND_TABLE_LEN			312				///<  Sound-Tabellenlänge @125KSPS, 400,64Hz (~1202Hz / 801,3Hz)
-#define	SOUND_ZERO_VAL			2048			///<  DAC-Wert für Mittel-Spannung
-#define	SOUND_DAC_SINE_AMPL		930.0			///<  Amplitude der beiden Sinusschwingungen
-#define	SOUND_SAMPLE_DMA		(DMA.CH0)		///<  DMA-Kanal zur Beep-Ausgabe
-#define	SOUND_DAC				DACB			///<  Sound-DAC
-#define	SOUND_DAC_CHANNEL		(DACB.CH1DATA)	///<  DACB_Kanal_1-Datenrgister
-#define	SOUND_BEEP_Duration		70				///<  Sound-Dauer 0,7 Sek. (70 Hundertstel)
+#define	SOUND_CLKDIV					EVSYS_CHMUX_PRESCALER_32_gc  ///<  F_SAMPLE= F_SYS / SOUND_CLKDIV = ~125KHz
+#define	SOUND_EV_CHANNEL				EVSYS_CH0MUX	///<  EV_CH0 als Taktteiler für DMA
+#define	SOUND_TABLE_LEN					312				///<  Sound-Tabellenlänge @125KSPS, 400,64Hz (~1202Hz / 801,3Hz)
+#define	SOUND_ZERO_VAL					2048			///<  DAC-Wert für Mittel-Spannung
+#define	SOUND_DAC_SINE_AMPL				930.0			///<  Amplitude der beiden Sinusschwingungen
+#define	SOUND_SAMPLE_DMA				(DMA.CH0)		///<  DMA-Kanal zur Beep-Ausgabe
+#define	SOUND_DAC						DACB			///<  Sound-DAC
+#define	SOUND_DAC_CHANNEL				(DACB.CH1DATA)	///<  DACB_Kanal_1-Datenrgister
+#define	SOUND_BEEP_Duration				70				///<  Sound-Dauer 0,7 Sek. (70 Hundertstel)
 //
-#define	HUNDRETHS_TIMER			TCD0			///<  Timer für den Hundertstel-Interupt
-#define	HUNDRETHS_TIMER_INT		TCD0_OVF_vect	///<  Interupt-Vektor für Hundertstel-INT
+#define	HUNDRETHS_TIMER					TCD0			///<  Timer für den Hundertstel-Interupt
+#define	HUNDRETHS_TIMER_INT				TCD0_OVF_vect	///<  Interupt-Vektor für Hundertstel-INT
 // Portdefinitionen
-#define	RACE_LED_PORT			PORTB			///<  Port für die Rennstatus-LEDs
-#define	KEYS_PORT				PORTE			///<  Port für die Eingabetasten
+#define	RACE_LED_PORT					PORTB			///<  Port für die Rennstatus-LEDs
+#define	START_DISPLAY_PORT				PORTC			///<  Port für die Rennstatus-LEDs
+#define	DEBUG_RS232_PORT				PORTE			///<  Port für die Eingabetasten
+#define	KEYS_PORT						PORTA			///<  Port für die Eingabetasten
 // Port_B:	Status-LEDS des Rennen-Status & DAC-Ausgang
-#define RACE_LED_NEW_RACE		(1<<0)			///<  Portleitung für Race-Status-LED "New Race": Portpin_0
-#define RACE_LED_OK				(1<<1)			///<  Portleitung für Race-Status-LED "OK": Portpin_1
-#define RACE_LED_ERROR			(1<<2)			///<  Portleitung für Race-Status-LED "Error": Portpin_2
-#define SOUND_BEEP_OUTPUT		(1<<3)			///<  DAC-Ausgang: Portpin_3 
+#define RACE_LED_NEW_RACE				(1<<0)			///<  Portleitung für Race-Status-LED "New Race": Portpin_0
+#define RACE_LED_OK						(1<<1)			///<  Portleitung für Race-Status-LED "OK": Portpin_1
+#define RACE_LED_ERROR					(1<<2)			///<  Portleitung für Race-Status-LED "Error": Portpin_2
+#define SOUND_BEEP_OUTPUT				(1<<3)			///<  DAC-Ausgang: Portpin_3
 /*! Port_E:  Tasten-Leitungen															*/
-#define KEY_IN_NEWRACE			(1<<0)			///<  Portleitung für Neues Rennen-Taste: Portpin_0
-#define KEY_IN_STARTFREE		(1<<1)			///<  Portleitung für Startfreigabe-Taste: Portpin_1
-#define KEY_IN_FINISHFREE		(1<<2)			///<  Portleitung für Zielfreigabe-Taste: Portpin_2
-#define KEY_IN_TIME_HOLD_RUN	(1<<3)			///<  Portleitung für Zeit anhalten / weiterlaufen
+#define KEY_IN_NEWRACE					(1<<0)			///<  Portleitung für Neues Rennen-Taste: Portpin_0
+#define KEY_IN_STARTFREE				(1<<1)			///<  Portleitung für Startfreigabe-Taste: Portpin_1
+#define KEY_IN_FINISHFREE				(1<<2)			///<  Portleitung für Zielfreigabe-Taste: Portpin_2
+#define KEY_IN_TIME_HOLD_RUN			(1<<3)			///<  Portleitung für Zeit anhalten / weiterlaufen
 // Betätigungsdauern
-#define	KEY_NEW_RACE_DURATION			250		///<  Betätigungsdauer New Race in 1/100 Sek.
-#define	KEY_START_APPROVAL_DURATION		100		///<  Betätigungsdauer Startfreigabe in 1/100 Sek.
-#define	KEY_FINISH_APPROVAL_DURATION	100		///<  Betätigungsdauer Zielfreigabe in 1/100 Sek.
-#define	KEY_RUN_HOLD_DURATION_HOLD		250		///<  Betätigungsdauer Zeit anhalten 
-#define	KEY_RUN_HOLD_DURATION_RUN		100		///<  Betätigungsdauer Zeit weiter laufen lassen
-#define	ONCE_SECONDS_DURATION			100		///<  Anzahl der 1/100 Sek. bis once-Flag
+#define	KEY_NEW_RACE_DURATION			250				///<  Betätigungsdauer New Race in 1/100 Sek.
+#define	KEY_START_APPROVAL_DURATION		100				///<  Betätigungsdauer Startfreigabe in 1/100 Sek.
+#define	KEY_FINISH_APPROVAL_DURATION	100				///<  Betätigungsdauer Zielfreigabe in 1/100 Sek.
+#define	KEY_RUN_HOLD_DURATION_HOLD		250				///<  Betätigungsdauer Zeit anhalten 
+#define	KEY_RUN_HOLD_DURATION_RUN		100				///<  Betätigungsdauer Zeit weiter laufen lassen
+#define	ONCE_SECONDS_DURATION			100				///<  Anzahl der 1/100 Sek. bis once-Flag
 // DEBUG
-#define	DEBUG_IN1				PORTA_IN		///< Debug-Eingang PortA-Pin1
-#define	DEBUG_OUT_PORT			PORTD			///< Debug-Out-Port
+#define	DEBUG_IN1						PORTA_IN		///< Debug-Eingang PortA-Pin1
+#define	DEBUG_OUT_PORT					PORTD			///< Debug-Out-Port
 /****************************************************************************************************/
 /*									Enums & Strukturen												*/
 /****************************************************************************************************/
