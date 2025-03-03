@@ -10,9 +10,10 @@
 *
 * @section sec_intro Einleitung
 *
+* - Dies ist die FW-Version 1.0
 * - Diese Firmware läuft auf dem Master-Modul (= Zeitmesseinrichtung und Anzeige)
 * - Als Mikrocontroller wird der Atmel-XMega32A4U im TQFP-44-Gehäuse verwendet
-* - Als µC-Takt wird ein 1MHz-Quarz verwendet (= Systemfrequenz)
+* - Als µC-Takt kann ein 4MHz-Quarz verwendet werden (= Systemfrequenz)
 * - Der Mikrocontroller benötigt eine Spannung von 3,3V
 * - Komponenten sind: LED-Zeitanzeige, Bedientasten, Status-LEDs und Master-RF-Modul
 * - Die Master-Modul-Zeitmessung und -Anzeige erfolgt in hundertstel Sekunden
@@ -95,7 +96,51 @@
 * - PeripherieRoutinen:		HAL (Hardware Abstraction Layer) für den XMega
 *
 * @section sec_resources Benutzte µC-Peripherie und verwendete Ports und Pins
+* !!! Achtung Änderungen der Portbelegung !!! Stand Schaltplan v. 28.01.25
 *
+* - Port_A: Debug-In -LED, Schalter SW1...4
+*   + Pin_0:	SW1 - NEW_RACE
+*   + Pin_1:	SW2 - START_APP
+*   + Pin_2:	SW3 - FINISH_APP
+*   + Pin_3:	SW4 - HOLD_RUN
+*   + Pin_4-6:	frei
+*   + Pin_7:	Debug_In
+*
+* - Port_B: "Race"-LEDs !! Low-active !! und Tonausgabe
+*   + Pin_0:	LED NEW_RACE
+*   + Pin_1:	LED OK
+*   + Pin_2:	LED ERROR
+*   + Pin_3:	Beep-Sound-Out (analog)
+*
+* - Port_C: Start-Lichtschranke- und Freigabe- Status-LEDs
+*   + Pin_0:	START-OK LED
+*   + Pin_1:	START-ERR LED
+*   + Pin_2:	START-BREAK LED
+*   + Pin_3:	Start-App LED
+*   + Pin_4:	HOLD-RUN LED
+*
+* - Port_C:  7Seg.Display-Master-SPI
+*   + Pin_5:	(µC-)MOSI - MAX7219-SPI: DIN
+*   + Pin_6:	belegt!!! NICHT DEB_LED0
+*   + Pin_7:	(µC-)CLK - MAX-SPI: CLK
+*
+* - Port_D: Ziel-Lichtschranke-Status- und Freigabe, Debug-LED - Low-active - und Max-!CS/Load
+*   + Pin_0		FINISH-OK LED
+*   + Pin_1		FINISH-ERR LED
+*   + Pin_2:	FINISH-OK LED
+*   + Pin_3:	Zielfreigabe-LED
+*   + Pin_4:	DEBUG_1-LED
+*   + Pin_5:	MAX-!CS/Load:
+
+* - Port_D: RF-Modul - USART
+*   + Pin_6:	(µC-RXD): GAMMA-SERIAL TXO
+*   + Pin_7:	(µC-TXD): GAMMA-SERIAL RXI
+
+
+
+/****************************************************************************
+* !!! alte Belegung !!!!
+/****************************************************************************
 * - Port_A: Debug & LEDs !! Low-active !!
 *   + Pin_0:	AUX-IO_1 -> Pad + 100nF zu GND
 *   + Pin_1:	Debug_In1 => SMD-Taster

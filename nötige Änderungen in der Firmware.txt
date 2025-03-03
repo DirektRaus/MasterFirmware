@@ -1,0 +1,8 @@
++Nötige Firmwareänderungen Master - wegen Schaltungsänderungen 2025
+
+- Oszillatorfrequenz Standard auf 4MHz 
+- Umbelegung Taster:
+SW1 - new race		PA0
+SW2 - start_app		PA1
+SW3 - finish_app	PA2
+SW4 - hold_run		PA3
